@@ -1,0 +1,13 @@
+{% extends "youtubeserch/layout.html"%}
+{% block body %} 
+<body class="container d-grid gap-5 " >
+  <div class="d-flex justify-content-center ">
+    
+    <form action="{% url 'uplodvideoprocess'%}">
+        <input type="file" accept="video/*" name="file" class = "btn btn-outline-info">
+        <input type="submit" class = "btn btn-outline-danger">
+    </form>
+  </div>
+</body>
+{% endblock %}
+</html>

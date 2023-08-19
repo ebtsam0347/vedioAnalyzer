@@ -1,0 +1,124 @@
+{% extends "youtubeserch/layout.html"%} 
+{% block body %}
+
+<style>
+  .highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+</style>
+
+
+<body class="container">
+  <h1 class="text-start text-center mt-auto">VIDEO CONTENT ANALYZER</h1>
+  <h1 id="url">{{url}}</h1>
+  <h1>{{title}}</h1>
+
+  <div class="mt-auto">
+    <iframe width="420" height="345" id="video" src="{{url}}?autoplay=1&mute=0"></iframe>
+  </div>
+
+  <div class="card rounded">
+    <h1>
+      This video is about {% for chapter in chapters %} {{chapter.gist}},
+      {%endfor%}
+    </h1>
+  </div>
+  <br />
+ 
+  <div class="card rounded ">
+    <h1>Chapters for this video</h1>
+
+    {% for chapter in chapters %}
+    <div class="card mb-2">
+      <div class="card-header">
+        <h2>
+          <button id="cbtn" class="btn btn-info" onclick="myFunction('{{chapter.start}}')">
+            <h4>{{chapter.headline}}</h4>
+          </button>
+        </h2>
+      </div>
+      <div class="card-body">
+        <h5>{{chapter.summary}}</h5>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+  <br />
+ 
+  <!-- important highlights -->
+  <div class="card rounded">
+    <h1>Auto-generated highlights</h1>
+  
+    <div class="highlight-grid">
+      {% for highlights in auto_highlights.results %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h4>
+            {% for time in highlights.timestamps %}
+            <button id="hbtn-{{time.start}}" class="btn btn-primary" onclick="myFunction('{{time.start}}')">
+              {{time.display}}
+            </button>
+            {% endfor %}
+            {{highlights.text}}
+          </h4>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- end highlights -->
+
+  <div class="card rounded">
+    <h1>Transcription</h1>
+
+    {% for text in sentiment_analysis %}
+    <div class="card mb-2">
+      <div  >
+        <p>
+          <button id="sbtn" class="btn btn-light" onclick="myFunction('{{text.start}}')">
+           <h5> {{text.text}}  </h5> 
+          </button>
+        </p>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+
+  <!-- Sensitive topics  -->
+  <div class="card rounded">
+    {% if sensitive_topics %}
+    <h2>Sensitive Topics:</h2>
+    <ol>
+      {% for topic in sensitive_topics %}
+        <h5><li>{{ topic }}</li></h5>
+      {% endfor %}
+    </ol>
+  {% endif %}
+  </div>
+   
+  <div class="card rounded">
+    <h1>Summarization of Video</h1>
+    {% if summarization %}
+        <h5>{{ summarization }}</h5>
+    {% else %}
+        <h4>No summarization available.</h4>
+    {% endif %}
+    
+
+  <script>
+    function myFunction(start) {
+      start = start / 1000;
+      start = parseInt(start);
+      console.log(start);
+      var video = document.getElementById("video");
+      video.src = "{{url}}?autoplay=1&start=" + start;
+      video.muted = false; // turn off mute
+      video.controls = true; // enable controls
+    }
+  </script>
+    
+  
+</body>
+{% endblock %}

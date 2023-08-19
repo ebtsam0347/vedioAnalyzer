@@ -1,0 +1,22 @@
+{% extends "youtubeserch/layout.html"%}
+{% block body %}
+  <div class="container-fluid"> 
+    <div class="row p-3">
+      <a href="{% url 'youtubeLink' %}" class="btn btn-outline-info btn-lg">
+        Search by URL
+      </a>
+    </div>
+
+    <div class="row p-3">
+      <a href="{% url 'youtube'%}" class="btn btn-outline-danger btn-lg">
+        Search from Youtube
+      </a>
+    </div>
+
+     <div class="row p-3">
+      <a href="{% url 'upload' %}" class="btn btn-outline-info btn-lg">
+        UPLOAD video
+      </a>
+    </div> 
+  </div>
+{% endblock %}

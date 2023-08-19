@@ -1,0 +1,13 @@
+{% extends "youtubeserch/layout.html" %}
+
+{% block body %}
+  <body class="container text-center">
+    <form action="{{ 'url : searchLink' }}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-danger">
+        Search
+      </button>
+    </form>
+  </body>
+{% endblock %}

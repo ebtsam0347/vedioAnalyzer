@@ -1,0 +1,17 @@
+import moviepy.editor as movie
+ 
+def convert():
+    clip = movie.VideoFileClip(fname)
+    #generated audio filename is krazy
+    clip.audio.write_audiofile("krazy.mp3")
+    msgForGenerate.set("Audio file generated successfully")
+
+def UploadAction():
+    #uploading file
+    filename = filedialog.askopenfilename(filetypes =[('Mp4 Files', '*.mp4'),('WMV Files', '*.wmv')])
+    #showing message for uploaded file
+    msgForUpload.set("Uploaded:"+filename)
+    #declaring global variable
+    global fname
+    #passing uploaded filename into fname
+    fname=filename

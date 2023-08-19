@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question Answering</title>
+</head>
+<body>
+    <h1>Question Answering</h1>
+
+    <form id="question-form">
+      <label for="question">Question:</label>
+      <input type="text" id="question" name="question" value="What is your name?"><br><br>
+      <label for="context">Context:</label>
+      <textarea id="context" name="context" rows="4" cols="50">My name is Ebtsam. I am 14 years old.</textarea><br><br>
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+      <input type="submit" value="Submit">
+    </form>
+
+    <p id="answer"></p>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#question-form').submit(function(event) {
+                event.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: form.serialize(),
+                    success: function(data) {
+                        $('#answer').html('Answer: ' + data.answer + ', score: ' + data.score + ', start: ' + data.start);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
